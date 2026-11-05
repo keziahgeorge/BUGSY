@@ -1,4 +1,4 @@
-#**BUGSY**
+# **BUGSY**
 Reinforcement Learning-Based Automated Game Testing
 Explore autonomously. Detect anomalies. Investigate game bugs.
 
