@@ -1,0 +1,3 @@
+Scope,InjectionEvents,TP,FP,TN,FN,Precision,Recall,F1,FPR,MeanLatencySeconds,MedianLatencySeconds,MinimumLatencySeconds,MaximumLatencySeconds,LatencySampleStdDevSeconds,ToleranceSeconds
+Provisional 3x3 cohort,6,5,N/A,N/A,1,N/A (no labeled normal intervals),0.833333,N/A (precision unavailable),N/A (no normal intervals and negative-window definition),0.016617,0.011462,0.002237,0.048722,0.018395,0.5
+All recorded injection events,13,6,N/A,N/A,7,N/A (no labeled normal intervals),0.461538,N/A (precision unavailable),N/A (no normal intervals and negative-window definition),0.015855,0.011753,0.002237,0.048722,0.016559,0.5

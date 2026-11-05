@@ -1,0 +1,7 @@
+DetectionRule,AlertCategory,AlertRows,UniqueAlertEpisodes_0_25s,RepeatedAlertRows,MatchingInjectionEvents,IntendedFaultResponse,Interpretation
+TotalVelocity,Physics,1558,3,1555,2,VelocitySpike,Matching is exact identity and <=0.5 s; simultaneous Physics and HorizontalVelocity rows refer to same velocity injection
+HorizontalVelocity,HorizontalVelocity,2,2,0,2,VelocitySpike,Matching is exact identity and <=0.5 s; simultaneous Physics and HorizontalVelocity rows refer to same velocity injection
+VerticalVelocity,VerticalVelocity,1505,1,1504,0,No dedicated repeated injector / not evidenced,Matching is exact identity and <=0.5 s; simultaneous Physics and HorizontalVelocity rows refer to same velocity injection
+PositionDiscontinuity,PositionDiscontinuity,4,4,0,4,Teleport,Matching is exact identity and <=0.5 s; simultaneous Physics and HorizontalVelocity rows refer to same velocity injection
+WallPenetration,WallPenetration,0,0,0,0,No dedicated repeated injector / not evidenced,Matching is exact identity and <=0.5 s; simultaneous Physics and HorizontalVelocity rows refer to same velocity injection
+Softlock,Softlock,0,0,0,0,No dedicated repeated injector / not evidenced,Matching is exact identity and <=0.5 s; simultaneous Physics and HorizontalVelocity rows refer to same velocity injection

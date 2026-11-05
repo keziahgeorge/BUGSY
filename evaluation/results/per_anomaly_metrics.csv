@@ -1,0 +1,3 @@
+AnomalyType,AllGroundTruthEvents,AllTP,AllFN,AllRecall,AllPrecision,AllF1,SelectedProvisionalTrials,SelectedTP,SelectedFN,SelectedRecall,SelectedPrecision,SelectedF1,FP,FPR,LatencyMeanSeconds,LatencyMedianSeconds,Note
+Teleport,5,4,1,0.800000,N/A,N/A,3,3,0,1.000000,N/A,N/A,N/A,N/A,0.020068,0.011753,Primary compatible categories only; no labeled normal intervals
+VelocitySpike,8,2,6,0.250000,N/A,N/A,3,2,1,0.666667,N/A,N/A,N/A,N/A,0.007429,0.007429,Primary compatible categories only; no labeled normal intervals
