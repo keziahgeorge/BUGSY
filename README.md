@@ -310,9 +310,9 @@ The anomaly detection module is evaluated using controlled fault injection in th
 7. Compare the records using shared run, trial and episode identifiers.
 8. Calculate detection performance and latency where the available ground truth supports the measurements.
 
-### Preliminary Experimental Results
+### Archived Preliminary Experimental Results
 
-The current log-based analysis identified a provisional evaluation cohort consisting of three teleportation trials and three velocity-spike trials.
+The table below preserves the earlier log-based analysis of a provisional three-teleport, three-velocity cohort. It includes the pre-fix velocity run `b2ec0c5cc8b14472bffdfc3419502e7c` and is superseded for corrected-implementation repeatability.
 
 | Metric | Teleportation | Velocity Spike |
 |---|---:|---:|
@@ -330,9 +330,10 @@ Recall = \frac{5}{6} \approx 0.8333
 
 **Important evaluation qualifications:**
 
-- The six-trial cohort was selected provisionally from persistent logs because the original logs do not explicitly label the intended review trials.
-- One selected velocity trial predates the deterministic velocity-injection scheduling fix. Results should therefore not be interpreted as a clean repeatability evaluation of the corrected implementation until the cohort has been confirmed and regenerated.
-- The figures represent preliminary event-level matching results, not overall detection accuracy.
+- These numbers are an archived preliminary analysis of the earlier provisional six-event cohort. They are not corrected-implementation velocity repeatability results.
+- The revised trial review retains three Teleport runs and two post-fix VelocitySpike runs. No third post-fix velocity injection exists in the available logs, so corrected velocity repeatability remains incomplete.
+- The two retained post-fix velocity runs have successful ground-truth records and matching Physics and HorizontalVelocity alerts; the second category is corroborating evidence, not a second detection.
+- The figures represent preliminary event-level matching results, not overall detection accuracy. The cohort remains provisional until the final three-plus-three set is available and confirmed.
 - Precision, F1-score and false-positive rate are not reliably established because sufficiently labeled fault-free evaluation intervals are unavailable.
 - The reported detection latency is measured between the ground-truth injection timestamp and the first compatible detector alert.
 - Repeated alerts from a single underlying anomaly are not counted as separate successful injections.
@@ -364,47 +365,221 @@ A comparable detector-disabled baseline has not yet been established. Pooled med
 
 ## 11. Project Structure
 
-The main project components are organized as follows:
+This tree lists the files and Unity assets included in the repository. Unity cache folders and local runtime logs are excluded; curated evaluation outputs under `evaluation/results/` are kept and labelled provisional where applicable.
 
 ```text
-BUGSY_Parkour/
-│
+BUGSY/
 ├── Assets/
+│   ├── _Recovery/
+│   │   ├── 0.unity
+│   │   └── 0.unity.meta
+│   ├── Editor/
+│   │   ├── BugsyAgentSetup.cs
+│   │   ├── BugsyAgentSetup.cs.meta
+│   │   ├── BugsyMazeBuilder.cs
+│   │   ├── BugsyMazeBuilder.cs.meta
+│   │   ├── BugsyReachableCells.cs
+│   │   ├── BugsyReachableCells.cs.meta
+│   │   ├── BugsyTrainingMode.cs
+│   │   └── BugsyTrainingMode.cs.meta
+│   ├── Materials/
+│   │   ├── Mat_Beam.mat
+│   │   ├── Mat_Beam.mat.meta
+│   │   ├── Mat_Boulder.mat
+│   │   ├── Mat_Boulder.mat.meta
+│   │   ├── Mat_BoulderMarker.mat
+│   │   ├── Mat_BoulderMarker.mat.meta
+│   │   ├── Mat_Finish.mat
+│   │   ├── Mat_Finish.mat.meta
+│   │   ├── Mat_Floor.mat
+│   │   ├── Mat_Floor.mat.meta
+│   │   ├── Mat_FloorA.mat
+│   │   ├── Mat_FloorA.mat.meta
+│   │   ├── Mat_FloorB.mat
+│   │   ├── Mat_FloorB.mat.meta
+│   │   ├── Mat_FloorC.mat
+│   │   ├── Mat_FloorC.mat.meta
+│   │   ├── Mat_FloorD.mat
+│   │   ├── Mat_FloorD.mat.meta
+│   │   ├── Mat_Laser.mat
+│   │   ├── Mat_Laser.mat.meta
+│   │   ├── Mat_MinimapMarker.mat
+│   │   ├── Mat_MinimapMarker.mat.meta
+│   │   ├── Mat_Obstacle.mat
+│   │   ├── Mat_Obstacle.mat.meta
+│   │   ├── Mat_Pit.mat
+│   │   ├── Mat_Pit.mat.meta
+│   │   ├── Mat_Platform.mat
+│   │   ├── Mat_Platform.mat.meta
+│   │   ├── Mat_Player.mat
+│   │   ├── Mat_Player.mat.meta
+│   │   ├── Mat_Spinner.mat
+│   │   ├── Mat_Spinner.mat.meta
+│   │   ├── Mat_Start.mat
+│   │   ├── Mat_Start.mat.meta
+│   │   ├── Mat_Wall.mat
+│   │   └── Mat_Wall.mat.meta
+│   ├── ML-Agents/
+│   │   ├── Timers/
+│   │   │   ├── MazeBugFree_timers.json
+│   │   │   ├── MazeBugFree_timers.json.meta
+│   │   │   ├── MazeBugged_timers.json
+│   │   │   └── MazeBugged_timers.json.meta
+│   │   └── Timers.meta
+│   ├── Models/
+│   │   ├── BugsyAgent.onnx
+│   │   ├── BugsyAgent.onnx.meta
+│   │   ├── BugsyAgent_v8.onnx
+│   │   └── BugsyAgent_v8.onnx.meta
+│   ├── Prefabs/
 │   ├── Scenes/
-│   │   └── MazeBugged.unity
-│   │
-│   └── Scripts/
-│       ├── BugsyAgent.cs
-│       ├── CoverageTracker.cs
-│       ├── BugsyAnomalyDetector.cs
-│       ├── BugsyGroundTruthRecorder.cs
-│       ├── BugsyTeleportBug.cs
-│       ├── BugsyVelocityBug.cs
-│       ├── PlayerController.cs
-│       └── GameManager.cs
-│
+│   │   ├── MazeBugFree.unity
+│   │   ├── MazeBugFree.unity.meta
+│   │   ├── MazeBugged.unity
+│   │   └── MazeBugged.unity.meta
+│   ├── Scripts/
+│   │   ├── BoulderTrap.cs
+│   │   ├── BoulderTrap.cs.meta
+│   │   ├── BugsyAgent.cs
+│   │   ├── BugsyAgent.cs.meta
+│   │   ├── BugsyAnomalyDetector.cs
+│   │   ├── BugsyAnomalyDetector.cs.meta
+│   │   ├── BugsyGroundTruthRecorder.cs
+│   │   ├── BugsyGroundTruthRecorder.cs.meta
+│   │   ├── BugsyTeleportBug.cs
+│   │   ├── BugsyTeleportBug.cs.meta
+│   │   ├── BugsyVelocityBug.cs
+│   │   ├── BugsyVelocityBug.cs.meta
+│   │   ├── CameraFollow.cs
+│   │   ├── CameraFollow.cs.meta
+│   │   ├── CoverageTracker.cs
+│   │   ├── CoverageTracker.cs.meta
+│   │   ├── FinishZone.cs
+│   │   ├── FinishZone.cs.meta
+│   │   ├── GameManager.cs
+│   │   ├── GameManager.cs.meta
+│   │   ├── LaserGrid.cs
+│   │   ├── LaserGrid.cs.meta
+│   │   ├── MiniMap.cs
+│   │   ├── MiniMap.cs.meta
+│   │   ├── MovingPlatform.cs
+│   │   ├── MovingPlatform.cs.meta
+│   │   ├── Pendulum.cs
+│   │   ├── Pendulum.cs.meta
+│   │   ├── PlayerController.cs
+│   │   ├── PlayerController.cs.meta
+│   │   ├── Rotator.cs
+│   │   ├── Rotator.cs.meta
+│   │   ├── WallFollowerBrain.cs
+│   │   └── WallFollowerBrain.cs.meta
+│   ├── Settings/
+│   │   ├── DefaultVolumeProfile.asset
+│   │   ├── DefaultVolumeProfile.asset.meta
+│   │   ├── Mobile_Renderer.asset
+│   │   ├── Mobile_Renderer.asset.meta
+│   │   ├── Mobile_RPAsset.asset
+│   │   ├── Mobile_RPAsset.asset.meta
+│   │   ├── PC_Renderer.asset
+│   │   ├── PC_Renderer.asset.meta
+│   │   ├── PC_RPAsset.asset
+│   │   ├── PC_RPAsset.asset.meta
+│   │   ├── SampleSceneProfile.asset
+│   │   ├── SampleSceneProfile.asset.meta
+│   │   ├── UniversalRenderPipelineGlobalSettings.asset
+│   │   └── UniversalRenderPipelineGlobalSettings.asset.meta
+│   ├── TutorialInfo/
+│   │   ├── Editor/
+│   │   │   ├── ReadmeEditor.cs
+│   │   │   └── ReadmeEditor.cs.meta
+│   │   ├── Icons/
+│   │   │   ├── URP.png
+│   │   │   └── URP.png.meta
+│   │   ├── StyleSheets/
+│   │   │   ├── ReadmeEditor.uss
+│   │   │   ├── ReadmeEditor.uss.meta
+│   │   │   ├── ReadmeEditorDark.uss
+│   │   │   ├── ReadmeEditorDark.uss.meta
+│   │   │   ├── ReadmeEditorLight.uss
+│   │   │   └── ReadmeEditorLight.uss.meta
+│   │   ├── Editor.meta
+│   │   ├── Icons.meta
+│   │   ├── Layout.wlt
+│   │   ├── Layout.wlt.meta
+│   │   ├── Readme.cs
+│   │   ├── Readme.cs.meta
+│   │   └── StyleSheets.meta
+│   ├── _Recovery.meta
+│   ├── Editor.meta
+│   ├── InputSystem_Actions.inputactions
+│   ├── InputSystem_Actions.inputactions.meta
+│   ├── Materials.meta
+│   ├── ML-Agents.meta
+│   ├── Models.meta
+│   ├── Prefabs.meta
+│   ├── Readme.asset
+│   ├── Readme.asset.meta
+│   ├── Scenes.meta
+│   ├── Scripts.meta
+│   ├── Settings.meta
+│   └── TutorialInfo.meta
 ├── evaluation/
+│   ├── results/
+│   │   ├── alerts_by_detection_rule.png
+│   │   ├── computational_efficiency.csv
+│   │   ├── computational_processing_time_distribution.png
+│   │   ├── detection_latency.csv
+│   │   ├── detection_latency_by_type.png
+│   │   ├── detection_success_teleport.png
+│   │   ├── detection_success_velocity.png
+│   │   ├── evaluation_report.md
+│   │   ├── evaluation_summary.csv
+│   │   ├── event_matching_results.csv
+│   │   ├── experiment_manifest.csv
+│   │   ├── mean_latency_comparison.png
+│   │   ├── per_anomaly_metrics.csv
+│   │   ├── per_trial_metrics.csv
+│   │   ├── repeatability_analysis.csv
+│   │   ├── rule_level_analysis.csv
+│   │   ├── trial_selection_confirmation.csv
+│   │   └── trial_selection_review.md
 │   ├── bugsy_eval.py
-│   ├── test_bugsy_eval.py
 │   ├── README.md
-│   └── results/
-│       ├── evaluation_report.md
-│       ├── experiment_manifest.csv
-│       ├── event_matching_results.csv
-│       ├── per_trial_metrics.csv
-│       ├── per_anomaly_metrics.csv
-│       ├── detection_latency.csv
-│       ├── repeatability_analysis.csv
-│       ├── computational_efficiency.csv
-│       └── charts/
-│
+│   └── test_bugsy_eval.py
 ├── Packages/
+│   ├── manifest.json
+│   └── packages-lock.json
 ├── ProjectSettings/
+│   ├── AudioManager.asset
+│   ├── ClusterInputManager.asset
+│   ├── DynamicsManager.asset
+│   ├── EditorBuildSettings.asset
+│   ├── EditorSettings.asset
+│   ├── GraphicsSettings.asset
+│   ├── InputManager.asset
+│   ├── MemorySettings.asset
+│   ├── MultiplayerManager.asset
+│   ├── NavMeshAreas.asset
+│   ├── PackageManagerSettings.asset
+│   ├── Physics2DSettings.asset
+│   ├── PhysicsCoreProjectSettings2D.asset
+│   ├── PresetManager.asset
+│   ├── ProjectAuditorSettings.asset
+│   ├── ProjectSettings.asset
+│   ├── ProjectVersion.txt
+│   ├── QualitySettings.asset
+│   ├── SceneTemplateSettings.json
+│   ├── ShaderGraphSettings.asset
+│   ├── TagManager.asset
+│   ├── TimeManager.asset
+│   ├── UnityConnectSettings.asset
+│   ├── URPProjectSettings.asset
+│   ├── VersionControlSettings.asset
+│   ├── VFXManager.asset
+│   └── XRSettings.asset
+├── .gitignore
 ├── bugsy_ppo.yaml
 └── README.md
 ```
-
-The tree highlights the principal components. Additional Unity assets and configuration files are included in the project.
 
 ## 12. Installation and Setup
 
@@ -420,17 +595,15 @@ The project was developed using Unity 6 and Unity ML-Agents.
 ### Clone the Repository
 
 ```bash
-git clone <REPOSITORY_URL>
-cd BUGSY_Parkour
+git clone https://github.com/nivedita-rmsh/BUGSY.git
+cd BUGSY
 ```
-
-Replace `<REPOSITORY_URL>` with the actual GitHub repository URL.
 
 ### Open in Unity
 
 1. Open Unity Hub.
 2. Select **Add Project**.
-3. Select the cloned `BUGSY_Parkour` directory.
+3. Select the cloned `BUGSY` directory.
 4. Allow Unity to import assets and packages.
 5. Open the `MazeBugged` scene.
 
@@ -443,7 +616,7 @@ Replace `<REPOSITORY_URL>` with the actual GitHub repository URL.
 5. Verify that the Behavior Name, observation space and action space match the trained model.
 6. Ensure the Decision Requester and BugsyAgent components are configured correctly.
 
-The trained model must be available locally or downloaded from the project's model release location.
+The repository includes the current model at `Assets/Models/BugsyAgent.onnx`; `MazeBugged.unity` references it. A separate v8 support model is stored at `Assets/Models/BugsyAgent_v8.onnx` and is not assigned to the current agent.
 
 ## 13. Running BUGSY
 

@@ -1,0 +1,62 @@
+# Unity generated data and local editor state
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Uu]serSettings/
+[Bb]uild/
+[Bb]uilds/
+MemoryCaptures/
+Recordings/
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+.vsconfig
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Python environments, caches, and test artifacts
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local experiment output and training intermediates at repository root
+/bugsy_ground_truth.csv
+/bugsy_detector_events.csv
+/bugsy_detector_performance.csv
+/bugsy_detector_samples.csv
+/bugsy_anomalies*.csv
+/bugsy_position_diagnostics.csv
+/results/
+*.ckpt
+*.pt
+*.pth
+
+# Personal settings and secrets
+.env
+.env.*
+!.env.example
+secrets.*
+credentials.*
+*.pem
+*.key
+*.p12
+*.pfx
+.npmrc
+.pypirc
