@@ -630,7 +630,7 @@ The project was developed using Unity 6 and Unity ML-Agents.
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/nivedita-rmsh/BUGSY.git
+git clone https://github.com/keziahgeorge/BUGSY.git
 cd BUGSY
 ```
 
@@ -694,13 +694,46 @@ Unity stores runtime records under:
 Application.persistentDataPath
 ```
 
-On the development Mac, this resolved to:
+On Windows, this resolves to:
+
+```text
+%USERPROFILE%\AppData\LocalLow\DefaultCompany\BUGSY_Parkour\
+```
+
+On macOS:
 
 ```text
 ~/Library/Application Support/DefaultCompany/BUGSY_Parkour/
 ```
 
 The structured detector event log, ground-truth records and performance measurements are stored separately.
+
+### Running Navigation Analysis & Figures
+
+To compute statistics (Bootstrap CI, Wilson score intervals, regret) and generate exploration charts from baseline evaluation CSVs:
+
+```bash
+cd navigation
+pip install pandas matplotlib numpy
+python make_figures.py
+```
+
+Outputs (charts and `summary_table.csv`) are written to `navigation/figures/`.
+
+### Training the Navigation Agent with PPO
+
+To train the exploration policy from scratch using Unity ML-Agents:
+
+```bash
+pip install mlagents
+mlagents-learn navigation/bugsy_ppo.yaml --run-id=bugsy_training --force
+```
+
+Press **Play** in Unity when prompted. To monitor training progress in real-time:
+
+```bash
+tensorboard --logdir results/
+```
 
 ## 14. Evaluation Framework
 
