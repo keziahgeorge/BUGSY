@@ -363,6 +363,17 @@ A comparable detector-disabled baseline has not yet been established. Pooled med
 | CSV | Ground-truth and detector event storage |
 | Matplotlib | Evaluation visualizations |
 
+## Contributors
+
+| Contributor | Focus | Folder |
+|---|---|---|
+| **Nivedita** | Physics-based anomaly detection, fault injection, evaluation pipeline | Root (`Assets/`, `evaluation/`) |
+| **Kezia** | PPO exploration agent training, baseline comparison, figure generation | [`kezia-exploration/`](kezia-exploration/) |
+
+The shared Unity game code (scenes, scripts, materials, project settings) is used by both contributions. See [`kezia-exploration/README.md`](kezia-exploration/README.md) for Kezia's specific implementation details, training instructions, and evaluation results.
+
+---
+
 ## 11. Project Structure
 
 This tree lists the files and Unity assets included in the repository. Unity cache folders and local runtime logs are excluded; curated evaluation outputs under `evaluation/results/` are kept and labelled provisional where applicable.
@@ -576,6 +587,26 @@ BUGSY/
 │   ├── VersionControlSettings.asset
 │   ├── VFXManager.asset
 │   └── XRSettings.asset
+├── kezia-exploration/
+│   ├── baseline-results/           # CoverageTracker CSV logs (100 episodes per baseline)
+│   │   ├── baseline_random.csv
+│   │   ├── baseline_wallfollower.csv
+│   │   ├── baseline_v8.csv
+│   │   ├── baseline_v8_unseen.csv
+│   │   ├── baseline_v9.csv
+│   │   ├── baseline_nomap.csv
+│   │   └── baseline_nomap300.csv
+│   ├── figures/                    # Pre-generated evaluation plots
+│   │   ├── fig1_cumulative_unique.png
+│   │   ├── fig2_coverage_improved.png
+│   │   ├── fig4_generalization_gap.png
+│   │   └── fig11_cumulative_regret_difference.png
+│   ├── models/                     # Exported ONNX inference models
+│   │   ├── BugsyAgent_v8.onnx
+│   │   └── BugsyAgent_v9.onnx
+│   ├── make_figures.py             # Generates all evaluation figures
+│   ├── bugsy_ppo.yaml              # ML-Agents PPO training configuration
+│   └── README.md                   # Kezia's implementation documentation
 ├── .gitignore
 ├── bugsy_ppo.yaml
 └── README.md
