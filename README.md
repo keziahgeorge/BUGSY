@@ -68,18 +68,19 @@ BUGSY addresses these challenges by combining novelty-driven autonomous explorat
 
 ## 4. System Architecture
 
-BUGSY consists of the following major components:
+BUGSY integrates two collaborative, decoupled modules operating within the same Unity parkour simulation:
 
-| Component | Responsibility |
-|---|---|
-| Unity Game Environment | Provides the interactive parkour environment |
-| BugsyAgent | Controls the autonomous player using PPO |
-| CoverageTracker | Tracks visited spatial cells and calculates novelty rewards |
-| GameManager | Manages gameplay and episode flow |
-| BugsyAnomalyDetector | Identifies potential physics inconsistencies |
-| Fault Injectors | Introduce controlled physical anomalies |
-| BugsyGroundTruthRecorder | Records successful fault injection events |
-| Evaluation Pipeline | Compares ground-truth events with detector alerts |
+| Subsystem | Component | Responsibility | Contributor |
+|---|---|---|---|
+| **Shared Simulation** | Unity Game Environment | Procedural parkour maze with dynamic obstacles & physics | Shared |
+| **Shared Simulation** | GameManager | Episode lifecycle, player lives, state resets | Shared |
+| **Autonomous Navigation** | BugsyAgent | PPO reinforcement learning policy driving player navigation | **Kezia** |
+| **Autonomous Navigation** | CoverageTracker | Count-based spatial novelty tracking & intrinsic reward generator | **Kezia** |
+| **Autonomous Navigation** | Navigation Suite | Baseline benchmarks, PPO training configs, evaluation figures | **Kezia** ([`navigation/`](navigation/)) |
+| **Anomaly Detection** | BugsyAnomalyDetector | Rule-based physics invariant monitor (velocity, position, penetration) | **Nivedita** |
+| **Anomaly Detection** | Fault Injectors | Controlled perturbations (teleportation, velocity spikes) | **Nivedita** |
+| **Anomaly Detection** | BugsyGroundTruthRecorder | Synchronized injection event recorder with monotonic timestamps | **Nivedita** |
+| **Anomaly Detection** | Evaluation Pipeline | Offline event matching, detection latency, sensitivity analysis | **Nivedita** ([`evaluation/`](evaluation/)) |
 
 ### System Workflow
 
@@ -365,12 +366,12 @@ A comparable detector-disabled baseline has not yet been established. Pooled med
 
 ## Contributors
 
-| Contributor | Focus | Folder |
+| Contributor | Focus Area | Primary Directories & Scripts |
 |---|---|---|
-| **Nivedita** | Physics-based anomaly detection, fault injection, evaluation pipeline | Root (`Assets/`, `evaluation/`) |
-| **Kezia** | PPO exploration agent training, baseline comparison, figure generation | [`kezia-exploration/`](kezia-exploration/) |
+| **Kezia** | **Autonomous Navigation & RL Exploration** | [`navigation/`](navigation/), `Assets/Scripts/BugsyAgent.cs`, `CoverageTracker.cs`, `PlayerController.cs`, `WallFollowerBrain.cs` |
+| **Nivedita** | **Physics-Based Anomaly Detection & Testing** | [`evaluation/`](evaluation/), `Assets/Scripts/BugsyAnomalyDetector.cs`, `BugsyGroundTruthRecorder.cs`, `Bugsy*Bug.cs` |
 
-The shared Unity game code (scenes, scripts, materials, project settings) is used by both contributions. See [`kezia-exploration/README.md`](kezia-exploration/README.md) for Kezia's specific implementation details, training instructions, and evaluation results.
+Both modules operate within the **same unified Unity environment** (`Assets/`). Kezia's RL agent provides autonomous exploration through dynamic obstacles, while Nivedita's anomaly detector continuously monitors the agent's physical interactions to detect and log bugs. Detailed documentation for each module can be found in [`navigation/README.md`](navigation/README.md) and [`evaluation/README.md`](evaluation/README.md).
 
 ---
 
@@ -587,8 +588,8 @@ BUGSY/
 │   ├── VersionControlSettings.asset
 │   ├── VFXManager.asset
 │   └── XRSettings.asset
-├── kezia-exploration/
-│   ├── baseline-results/           # CoverageTracker CSV logs (100 episodes per baseline)
+├── navigation/
+│   ├── baseline-results/           # 100-episode evaluation CSVs (Random, Wall-Follower, PPO, Ablations)
 │   │   ├── baseline_random.csv
 │   │   ├── baseline_wallfollower.csv
 │   │   ├── baseline_v8.csv
@@ -596,17 +597,20 @@ BUGSY/
 │   │   ├── baseline_v9.csv
 │   │   ├── baseline_nomap.csv
 │   │   └── baseline_nomap300.csv
-│   ├── figures/                    # Pre-generated evaluation plots
+│   ├── figures/                    # Generated evaluation charts (coverage, regret, distribution)
 │   │   ├── fig1_cumulative_unique.png
 │   │   ├── fig2_coverage_improved.png
+│   │   ├── fig3_success_rate.png
 │   │   ├── fig4_generalization_gap.png
+│   │   ├── fig5_coverage_distribution.png
 │   │   └── fig11_cumulative_regret_difference.png
-│   ├── models/                     # Exported ONNX inference models
+│   ├── models/                     # Exported ONNX neural network policies
 │   │   ├── BugsyAgent_v8.onnx
 │   │   └── BugsyAgent_v9.onnx
-│   ├── make_figures.py             # Generates all evaluation figures
+│   ├── BUGSY_Parkour_RL_Explanation.md # Full line-by-line script explanation & RL mathematics
 │   ├── bugsy_ppo.yaml              # ML-Agents PPO training configuration
-│   └── README.md                   # Kezia's implementation documentation
+│   ├── make_figures.py             # Evaluation statistics & figure plotting script
+│   └── README.md                   # Navigation module documentation
 ├── .gitignore
 ├── bugsy_ppo.yaml
 └── README.md
